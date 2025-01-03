@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Library</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+h1 {
+    text-align: center;
+}
+.search-bar {
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+}
+.search-bar input {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.book-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.book-item {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+}
+.book-item img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ccc;
+}
+.book-item h3 {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+.book-item a {
+    display: block;
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.book-item a:hover {
+    background-color: #218838;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Book Library</h1>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search for books...">
+        </div>
+        <div class="book-list" id="bookList">
+            <!-- Books will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bookList = document.getElementById('bookList');
+            const searchInput = document.getElementById('searchInput');
+
+            function fetchBooks(query = '') {
+                fetch(`/api/books?q=${query}`)
+                    .then(response => response.json())
+                    .then(books => {
+                        displayBooks(books);
+                    });
+            }
+
+            function displayBooks(books) {
+                bookList.innerHTML = '';
+                books.forEach(book => {
+                    const bookItem = document.createElement('div');
+                    bookItem.className = 'book-item';
+                    bookItem.innerHTML = `
+                        <img src="${book.thumbnail}" alt="${book.title}">
+                        <h3>${book.title}</h3>
+                        <a href="${book.pdf}" download>Download PDF</a>
+                    `;
+                    bookList.appendChild(bookItem);
+                });
+            }
+
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                fetchBooks(searchTerm);
+            });
+
+            // Initial fetch of books
+            fetchBooks();
+        });
+    </script>
+</body>
+</html>

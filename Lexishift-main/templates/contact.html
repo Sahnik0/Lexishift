@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Lexishift</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .contact-info {
+            margin-bottom: 2rem;
+        }
+
+        .contact-info h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        input, textarea {
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 0.75rem;
+            border: none;
+            background-color: #3498db;
+            color: #fff;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p>If you have any questions, feedback, or inquiries, please don't hesitate to reach out to us. We are here to help and would love to hear from you!</p>
+
+        <div class="contact-info">
+            <h2>Contact Information</h2>
+            <p><strong>Email:</strong> <a href="mailto:forloopdeloop@gmail.com">forloopdeloop@gmail.com</a></p>
+            <p><strong>Phone:</strong> +91 9800567487</p>
+            <p><strong>Address:</strong> Adamas University, North 24 porgona , Pin 700126</p>
+        </div>
+
+        <form id="contact-form">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+
+    
+    </div>
+     <script>
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize EmailJS
+            (function() {
+                // Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
+                emailjs.init('Clf5rSoCnhqqeLqAk');
+            })();
+
+            // Add event listener to the form
+            document.getElementById('contact-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                emailjs.sendForm('service_ux9wzpa', 'template_ivkz8nl', this)
+                    .then(function() {
+                        alert('Message sent successfully!');
+                        document.getElementById('contact-form').reset();
+                    }, function(error) {
+                        console.log('FAILED...', error);
+                        alert('Failed to send message. Please try again later.');
+                    });
+            });
+        });
+    </script>
+</body>
+</html>

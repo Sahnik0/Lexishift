@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dyslexia-Friendly Document Converter</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <style>
+      
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes moveBackground {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 100% 100%;
+        }
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+        color: #333;
+        overflow-x: hidden;
+        
+        animation: moveBackground 20s linear infinite;
+      }
+      .feedback-popup {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.feedback-content {
+  background-color: #ffffff;
+  margin: 15% auto;
+  padding: 30px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.feedback-content h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.feedback-content p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.feedback-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.btn-good {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-improve {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  color: #aaa;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      nav {
+        color: white;
+        padding: 1rem 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        transition: background-color 0.3s ease;
+      }
+
+      nav.scrolled {
+        background-color: rgba(81, 59, 84, 0.28);
+      }
+
+      .nav-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      .logo span {
+        color: #000000;
+      }
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        margin-left: 20px;
+        transition: color 0.3s ease;
+      }
+      .nav-links a:hover {
+        color: #3498db;
+      }
+      .converter {
+        background-color: #f4f4f4;
+        padding: 4rem 0;
+      }
+      
+
+      .file-upload {
+        border: 2px dashed #3498db;
+        padding: 2rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        transition: all 0.3s ease;
+        animation: pulse 2s infinite;
+      }
+
+      .file-upload:hover {
+        background-color: rgba(52, 152, 219, 0.1);
+      }
+
+      .settings {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8.2rem;
+        border-radius: 20px;
+        padding: 4rem 0;
+      }
+
+      .settings label {
+        display: block;
+        margin-bottom: 0.5rem;
+        animation: fadeInUp 0.5s ease-out;
+      }
+
+      .settings select,
+      .settings input {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+        border-radius: 20px;
+      }
+
+      .settings select:focus,
+      .settings input:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px #3498db;
+      }
+
+      .convert-btn {
+        background-color: #000000;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: bold;
+        color: white;
+        border-color:black;
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s ease, box-shadow 0.40s;
+        animation: fadeInUp 0.5s ease-out 1s backwards;
+        display: block;
+        margin: 0 auto;
+      }
+
+      .convert-btn:hover {
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9);
+        transform: translateY(-2px);
+      }
+
+      .convert-btn:active{
+        color:black;
+        background-color:white;
+      }
+      .about-us {
+        padding: 50px 0;
+        background-color: #fff;
+        text-align: center;
+      }
+
+      .about-us .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .about-us h2 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+      }
+
+      .about-us .subtitle {
+        font-size: 1.2em;
+        margin-bottom: 40px;
+        color: #666;
+      }
+
+      .about-us .content {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .about-us .our-journey,
+      .about-us .meet-the-team {
+        flex: 1;
+        min-width: 250px;
+      }
+
+      .about-us h3 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+      }
+
+      .about-us .our-journey p {
+        font-size: 1em;
+        line-height: 1.6;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .about-us .meet-the-team .team-members {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .about-us .team-member {
+        text-align: center;
+      }
+
+     .about-us .team-member .icon {
+        width: 100px; 
+  height: 100px; 
+  border-radius: 50%; 
+  margin-bottom: 10px;
+  object-fit: cover; 
+  transition :border-radius 0.40s;
+  box-shadow : 3px 3px 5px rgba(0,0,0,0.5);
+      }
+
+      .about-us .team-member .icon:hover{
+        border-radius: 30%;
+      }
+
+      .about-us .team-member .name {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .about-us .team-member .role {
+        font-size: 1em;
+        color: #777;
+      }
+      .social-links {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.social-links img {
+  width: 20px;
+  height: 20px;
+}
+
+.team-member .contact {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.meet-the-team {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.meet-the-team h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.team-members {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.team-member {
+  flex: 1 1 200px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .team-member {
+    flex: 1 1 100%;
+  }
+}
+
+      footer {
+        background-color: #f8f8f8;
+        padding: 20px 0;
+        margin-top: 50px;
+      }
+
+      footer .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      footer .footer-links a {
+        margin-right: 15px;
+        color: #666;
+        text-decoration: none;
+      }
+
+      footer .footer-links a:hover {
+        text-decoration: underline;
+      }
+
+      footer p {
+        font-size: 0.9em;
+        color: #666;
+        margin: 0;
+      }
+
+      .scroll-to-top {
+        position: fixed;
+        bottom: 20px;
+        left: 600px;
+        background-color: #000000;
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .scroll-to-top.visible {
+        opacity: 1;
+      }
+
+      .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+
+      .animate-on-scroll.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .hero {
+        color: white;
+        padding: 4rem 0;
+      }
+      .hero-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 600px;
+      }
+      .hero-text {
+        flex: 1;
+        text-align: center;
+      }
+      .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+      .hero p {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+      }
+      .hero-buttons {
+        display: flex;
+        gap: 3.8rem;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: bold;
+
+        position: absolute;
+        left: 39%;
+      }
+      .hero-buttons button {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: color 0.50s, background-color 0.50s;
+        width: 130px;
+        height: 40px;
+      }
+      .hero-buttons button:hover{
+        color: #f4f4f4;
+        background-color: #000000;
+      }
+      .get-started {
+        background-color: white;
+        color: black;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      .video-background {
+        position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+      }
+      #cursor-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9999;
+      }
+      .hero-text span {
+        color: #000000;
+      }
+      #bg-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1000;
+    object-fit: cover;
+}
+
+/* Optional: style to dim the video for better text visibility */
+.video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the last value (0.5) for opacity */
+    z-index: -999;
+}
+ .progress {
+    height: 40px;
+    margin-top:20px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0);
+  }
+  .progress-bar {
+    float: left;
+    width: 0%;
+    height: 100%;
+    font-size: 12px;
+    line-height: 20px;
+    color: #fff;
+    text-align: center;
+    background-color:#09B2EF;
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+    transition: width .6s ease;
+  }
+
+  .our-journey, .meet-the-team {
+  flex: 1;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+  border-left: 2px solid #3498db;
+}
+
+.timeline-item {
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.timeline-icon {
+  position: absolute;
+  left: -2.7rem;
+  background: #3498db;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeline-content {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.team-members {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.recommendations {
+  padding: 50px 0;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+.recommendations .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.recommendations h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+#chatbot {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+#chatbot-toggle {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+#chatbot-window {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 300px;
+  height: 400px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.learn-more {
+    background-color: white;
+        color: black;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: bold;
+        width: 100px;
+        height: 35px;
+          display:flex;
+        padding-left:42px;
+        padding-top:5px;
+        transition: color 0.40s, background-color 0.40s; 
+        text-decoration:none;
+        
+  }
+
+  .learn-more:hover {
+    color: white;
+    background-color: #000000;
+  }
+  
+
+    </style>
+  </head>
+  <body>
+    <nav id="navbar">
+      <div class="container nav-content">
+        <div class="logo">LEXI<span>SHIFT</span></div>
+        <div class="nav-links">
+          <a href="#hero">Home</a>
+          <a href="#converter"
+            ><i class="fa fa-refresh" aria-hidden="true"></i> Convert</a
+          >
+          <a href="#about-us">About Us</a>
+        </div>
+      </div>
+    </nav>
+
+    <section id="hero" class="hero">
+      <div class="container hero-content">
+        <video autoplay muted loop id="bg-video">
+    <source src="{{ url_for('static', filename='video.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+        <div class="hero-text">
+          <h1>Welcome to LEXI<span>SHIFT</span></h1>
+          <p>Making reading easier for everyone</p>
+          <div class="hero-buttons">
+            <button class="get-started" id="get-started-btn">
+              Get Started
+            </button>
+            <a href="{{ url_for('main.learn_more') }}" class="learn-more">
+                        Library
+                    </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="converter" class="converter">
+        <div class="container">
+            <div class="file-upload animate-on-scroll">
+                <h2>Upload your PDF</h2>
+                <form id="convertForm" action="/" method="post" enctype="multipart/form-data">
+                    <input type="file" accept="application/pdf" name="file" required />
+                    <div class="settings animate-on-scroll">
+                        <div>
+                            <label for="font_name"><i class="fa fa-font" aria-hidden="true"></i> Select Font:</label>
+                            <select name="font_name" id="font_name">
+                                <option value="OpenDyslexic">OpenDyslexic</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="font_size"><i class="fas fa-text-height"></i> Font Size:</label>
+                            <input type="number" name="font_size" id="font_size" min="12" max="40" value="12" />
+                        </div>
+                        <div>
+                            <label for="line_spacing"><i class="fas fa-text-width"></i> Line Spacing:</label>
+                            <input type="number" name="line_spacing" id="line_spacing" min="5" max="22" step="0.1" value="14" />
+                        </div>
+                        <div>
+                            <label for="letter_spacing"><i class="fas fa-text-width"></i> Letter Spacing:</label>
+                            <input type="number" name="letter_spacing" id="letter_spacing" min="0.1" max="40" step="0.1" value="0.5" />
+                        </div>
+                        <div>
+                            <label for="text_color"><i class="fas fa-palette"></i> Text Color:</label>
+                            <input type="color" name="text_color" id="text_color" value="#000000" />
+                        </div>
+                    </div>
+                    
+            </div>
+            <button class="convert-btn animate-on-scroll" type="submit"><i class="fas fa-exchange-alt"></i> Convert</button>
+<!-- Adding a section for AI-generated recommendations -->
+<section id="recommendations" class="recommendations">
+  <div class="container">
+    <h2>AI Recommendations</h2>
+    <p id="ai-recommendations-text">Our AI suggests the best settings for your document:</p>
+    <ul id="ai-recommendations-list"></ul>
+  </div>
+</section>
+
+
+            <div id="progress-container" style="display: none;">
+  <div class="progress">
+    <div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+  <span id="progress-text">0%</span>
+</div>
+          </form>
+        </div>
+    </section>
+
+    <div id="feedbackPopup" class="feedback-popup">
+  <div class="feedback-content">
+    <h2>How was the converted document?</h2>
+    <p>Your feedback helps us improve our service &#128515;.</p>
+    <div class="feedback-buttons">
+      <button onclick="sendFeedback(1)" class="btn btn-good">
+        <i class="fas fa-thumbs-up"></i> Good
+      </button>
+      <button onclick="sendFeedback(0)" class="btn btn-improve">
+        <i class="fas fa-thumbs-down"></i> Needs Improvement
+      </button>
+    </div>
+    <button onclick="closeFeedbackPopup()" class="close-btn">&times;</button>
+  </div>
+</div>
+
+    <section id="about-us" class="about-us">
+      <div class="container">
+        <h2>About Us</h2>
+        <p class="subtitle">Learn more about the team behind Lexishift.</p>
+        <div class="content">
+          <div class="our-journey">
+            <h3>Our Journey</h3>
+            <div class="journey-timeline">
+              <div class="timeline-item">
+                <div class="timeline-icon">
+                  <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="timeline-content">
+                  <h4>The Idea</h4>
+                  <p>Lexishift was born from a simple yet powerful idea: to make document conversion accessible to everyone, especially those with dyslexia.</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-icon">
+                  <i class="fas fa-code"></i>
+                </div>
+                <div class="timeline-content">
+                  <h4>Development</h4>
+                  <p>Our passionate team of developers and designers worked tirelessly to create a user-friendly platform that not only looks great but provides a seamless experience.</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-icon">
+                  <i class="fas fa-rocket"></i>
+                </div>
+                <div class="timeline-content">
+                  <h4>Launch</h4>
+                  <p>We launched Lexishift with a mission to revolutionize the way people work with PDFs and other documents, making reading easier for everyone.</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-icon">
+                  <i class="fas fa-sync-alt"></i>
+                </div>
+                <div class="timeline-content">
+                  <h4>Continuous Improvement</h4>
+                  <p>We're constantly innovating and improving our platform based on user feedback and technological advancements to better serve our community.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="meet-the-team">
+            <h3>Meet the Team</h3>
+            <div class="team-members">
+              <div class="team-member">
+                <img src="{{ url_for('static', filename='images/Sankalpa 4.jpg') }}" alt="Sankalpa Sarkar" class="icon">
+                <p class="name">Sankalpa Sarkar</p>
+                <p class="role">Backend Developer</p>
+                <p class="contact">Email: sankalpasarkar68@gmail.com</p>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/sankalpacodes/" target="_blank"><img src="{{ url_for('static', filename='icons/linkedin.png') }}" alt="LinkedIn"></a>
+        <a href="https://github.com/sanks011" target="_blank"><img src="{{ url_for('static', filename='icons/github.png') }}" alt="GitHub"></a>
+      </div>
+              </div>
+              <div class="team-member">
+                <img src="{{ url_for('static', filename='images/Sahnik.jpg') }}" alt="Shovon Halder" class="icon">
+                <p class="name">Shovon Halder</p>
+                <p class="role">Frontend Developer</p>
+                <p class="contact">Email: shovonhalder04@gmail.com</p>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/shovon-halder-5ab775266/" target="_blank"><img src="{{ url_for('static', filename='icons/linkedin.png') }}" alt="LinkedIn"></a>
+        <a href="https://github.com/Shovon0004" target="_blank"><img src="{{ url_for('static', filename='icons/github.png') }}" alt="GitHub"></a>
+      </div>
+              </div>
+              <div class="team-member">
+                <img src="{{ url_for('static', filename='images/Shovon.jpg') }}" alt="Sahnik Biswas" class="icon">
+                <p class="name">Sahnik Biswas</p>
+                <p class="role">Frontend Developer</p>
+                <p class="contact">Email: biswassahnik@gmail.com</p>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/sahnik-biswas-8514012a7/" target="_blank"><img src="{{ url_for('static', filename='icons/linkedin.png') }}" alt="LinkedIn"></a>
+        <a href="https://github.com/Sahnik0" target="_blank"><img src="{{ url_for('static', filename='icons/github.png') }}" alt="GitHub"></a>
+      </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+<script>
+function sendFeedback(rating) {
+  // Send feedback to the AI service
+  fetch('your_ai_service_url', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ rating: rating })
+  }).then(response => response.json())
+    .then(data => console.log('Feedback received:', data))
+    .catch(error => console.error('Error:', error));
+
+  closeFeedbackPopup();
+}
+
+function closeFeedbackPopup() {
+  document.getElementById('feedbackPopup').style.display = 'none';
+}
+</script>
+
+
+
+
+
+
+      <footer>
+        <div class="container">
+          <div class="footer-links">
+            <a href="{{ url_for('main.contact') }}">Contact</a>
+            <a href="{{ url_for('main.privacy') }}">Privacy Policy</a>
+            <a href="{{ url_for('main.terms') }}">Terms of Use</a>
+          </div>
+          <p>&copy; 2024 Lexishift. All rights reserved.</p>
+        </div>
+      </footer>
+    </section>
+
+    <div class="scroll-to-top" id="scroll-to-top">&#9650;</div>
+    <canvas id="cursor-animation"></canvas>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $("#convertForm").on("submit", function () {
+  setTimeout(function () {
+    showFeedbackPopup();
+  }, 20000); 
+});
+
+function showFeedbackPopup() {
+  document.getElementById("feedbackPopup").style.display = "flex";
+}
+
+function closeFeedbackPopup() {
+  const popup = document.getElementById("feedbackPopup");
+  popup.style.animation = "fadeOut 0.3s ease-out";
+  setTimeout(() => {
+    popup.style.display = "none";
+    popup.style.animation = "";
+  }, 300);
+}
+
+function sendFeedback(feedback) {
+  $.ajax({
+    url: "/feedback",
+    type: "POST",
+    contentType: "application/json",
+    data: JSON.stringify({
+      feedback: feedback,
+      font_name: $("#font_name").val(),
+      font_size: $("#font_size").val(),
+      line_spacing: $("#line_spacing").val(),
+      letter_spacing: $("#letter_spacing").val(),
+      text_color: $("#text_color").val(),
+    }),
+    success: function (response) {
+      showThankYouMessage();
+    },
+  });
+}
+
+function showThankYouMessage() {
+  const content = document.querySelector(".feedback-content");
+  content.innerHTML = `
+    <h2>Thank You!</h2>
+    <p>We appreciate your feedback.</p>
+    <button onclick="closeFeedbackPopup()" class="btn btn-good">Close</button>
+  `;
+}
+    </script>
+
+   <script>
+document.getElementById('convertForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const formData = new FormData(this);
+
+  fetch('/ai_recommendations', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    const recommendationsList = document.getElementById('ai-recommendations-list');
+    recommendationsList.innerHTML = '';
+
+    data.recommendations.forEach(rec => {
+      const li = document.createElement('li');
+      li.textContent = rec;
+      recommendationsList.appendChild(li);
+    });
+  })
+  .catch(error => console.error('Error:', error));
+});
+
+</script>
+
+    
+
+    <script>
+      const canvas = document.getElementById("cursor-animation");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      let particles = [];
+      const maxParticles = 50;
+
+      class Particle {
+        constructor(x, y) {
+          this.x = x;
+          this.y = y;
+          this.size = Math.random() * 5 + 1;
+          this.speedX = Math.random() * 3 - 1.5;
+          this.speedY = Math.random() * 3 - 1.5;
+          this.color = `hsla(${Math.random() * 360}, 100%, 50%, 0.8)`;
+        }
+
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          if (this.size > 0.1) this.size -= 0.1;
+        }
+
+        draw() {
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function handleParticles() {
+        for (let i = 0; i < particles.length; i++) {
+          particles[i].update();
+          particles[i].draw();
+          if (particles[i].size <= 0.3) {
+            particles.splice(i, 1);
+            i--;
+          }
+        }
+      }
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        handleParticles();
+        requestAnimationFrame(animate);
+      }
+
+      window.addEventListener("mousemove", function (e) {
+        if (particles.length < maxParticles) {
+          particles.push(new Particle(e.x, e.y));
+        }
+      });
+
+      animate();
+
+      window.addEventListener("resize", function () {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+    </script>
+    <script>
+      const getStartedBtn = document.getElementById("get-started-btn");
+      const converterSection = document.getElementById("converter");
+
+      getStartedBtn.addEventListener("click", () => {
+        converterSection.scrollIntoView({ behavior: "smooth" });
+      });
+
+      const navbar = document.getElementById("navbar");
+      const scrollToTopBtn = document.getElementById("scroll-to-top");
+      const animateTargets = document.querySelectorAll(".animate-target");
+      const animateOnScrollElems =
+        document.querySelectorAll(".animate-on-scroll");
+      let currentImageIndex = 0;
+      const heroSection = document.querySelector(".hero");
+
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+          scrollToTopBtn.classList.add("visible");
+        } else {
+          navbar.classList.remove("scrolled");
+          scrollToTopBtn.classList.remove("visible");
+        }
+
+        animateOnScrollElems.forEach((elem) => {
+          if (isInViewport(elem)) {
+            elem.classList.add("visible");
+          }
+        });
+      });
+      scrollToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+      function isInViewport(elem) {
+        const rect = elem.getBoundingClientRect();
+        return (
+          rect.top >= 0 &&
+          rect.left >= 0 &&
+          rect.bottom <=
+            (window.innerHeight || document.documentElement.clientHeight) &&
+          rect.right <=
+            (window.innerWidth || document.documentElement.clientWidth)
+        );
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        animateTargets.forEach((target) => {
+          target.classList.add("visible");
+        });
+      });
+    </script>
+    <script>
+  $("#convertForm").on("submit", function (e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    const progressContainer = document.getElementById('progress-container');
+    
+    progressContainer.style.display = 'block';
+    simulateProgress();
+    
+    fetch('/', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.blob())
+    .then(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'dyslexia_friendly.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      progressContainer.style.display = 'none';
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      progressContainer.style.display = 'none';
+    });
+  });
+
+  function simulateProgress() {
+    let progress = 0;
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    
+    const interval = setInterval(() => {
+      if (progress >= 90) {
+        clearInterval(interval);
+      } else {
+        progress += Math.random() * 10;
+        progress = Math.min(progress, 90);
+        updateProgress(progress);
+      }
+    }, 500);
+
+    function updateProgress(value) {
+      progressBar.style.width = `${value}%`;
+      progressBar.setAttribute('aria-valuenow', value);
+      progressText.textContent = `${Math.round(value)}%`;
+    }
+  }
+  
+</script>
+  
+<script>
+window.embeddedChatbotConfig = {
+chatbotId: "6spUUQDebszt1Y2QLe6tV",
+domain: "www.chatbase.co"
+}
+</script>
+<script
+src="https://www.chatbase.co/embed.min.js"
+chatbotId="6spUUQDebszt1Y2QLe6tV"
+domain="www.chatbase.co"
+defer>
+</script>
+
+
+ 
+
+
+
+  </body>
+</html>
+
+

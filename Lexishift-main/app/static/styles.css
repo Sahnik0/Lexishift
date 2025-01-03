@@ -1,0 +1,371 @@
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes moveBackground {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #333;
+    overflow-x: hidden;
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    animation: moveBackground 20s linear infinite;
+}
+
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+nav {
+   
+    color: white;
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+nav.scrolled {
+    background-color: rgba(81, 59, 84, 0.28);
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+}
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    
+
+}
+.logo span {
+    color:#27ae60;
+}
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.3s ease;
+}
+.nav-links a:hover {
+    color: #3498db;
+}
+.converter {
+    background-color: #f4f4f4;
+    padding: 4rem 0;
+}
+
+.file-upload {
+    border: 2px dashed #3498db;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+}
+
+.file-upload:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+.settings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5.2rem;
+    border-radius: 20px;
+    padding: 4rem 0;
+    
+}
+
+.settings label {
+    display: block;
+    margin-bottom: 0.5rem;
+    animation: fadeInUp 0.5s ease-out;
+    
+    
+}
+
+.settings select,
+.settings input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    border-radius:20px;
+    
+}
+
+.settings select:focus,
+.settings input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #3498db;
+}
+
+.convert-btn {
+    background-color: #2ecc71;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out 1s backwards;
+    display: block;
+    margin: 0 auto;
+}
+
+.convert-btn:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+}
+
+.about-us {
+    padding: 50px 0;
+    background-color: #fff;
+    text-align: center;
+}
+
+.about-us .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.about-us h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.about-us .subtitle {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+    color: #666;
+}
+
+.about-us .content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.about-us .our-journey,
+.about-us .meet-the-team {
+    flex: 1;
+    min-width: 300px;
+}
+
+.about-us h3 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.about-us .our-journey p {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.about-us .meet-the-team .team-members {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.about-us .team-member {
+    text-align: center;
+}
+
+.about-us .team-member .icon {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.about-us .team-member .name {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.about-us .team-member .role {
+    font-size: 1em;
+    color: #777;
+}
+
+footer {
+    background-color: #f8f8f8;
+    padding: 20px 0;
+    margin-top: 50px;
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+footer .footer-links a {
+    margin-right: 15px;
+    color: #666;
+    text-decoration: none;
+}
+
+footer .footer-links a:hover {
+    text-decoration: underline;
+}
+
+footer p {
+    font-size: 0.9em;
+    color: #666;
+    margin: 0;
+}
+
+.scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    left: 600px;
+    background-color: #3498db;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.scroll-to-top.visible {
+    opacity: 1;
+}
+
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.hero {
+    
+    color: white;
+    padding: 4rem 0;
+}
+.hero-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height:600px;
+}
+.hero-text {
+    flex: 1;
+    text-align:center;
+    
+}
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    
+}
+.hero p {
+    font-size: 1rem;
+    margin-bottom: 2.0rem;
+   
+}
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    
+    position:absolute;
+    left:45%;
+}
+.hero-buttons button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.get-started {
+    background-color: white;
+    color: black;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+} 
+.video-background {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+}
+#cursor-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+.hero-text span {
+    color:#27ae60;
+}
