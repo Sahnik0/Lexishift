@@ -1,16 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence, useTransform, useScroll } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Brain, Users, FileText, GraduationCap, Github, Twitter, Linkedin, Mail, ChevronDown, BookOpen, Sparkles, MessageSquareMore, Menu, X, Sun, Moon, Home, Compass, Book, MessageCircle, Info } from 'lucide-react';
+import { Brain, Users, FileText, GraduationCap, Github, Twitter, Linkedin, Mail, ChevronDown, BookOpen, Sparkles, MessageSquareMore, Menu, X, Home, Compass, Book, MessageCircle, Info } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDark, setIsDark] = useState(true);
-
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-    document.documentElement.classList.toggle('light-theme');
-  };
 
   const navLinks = [
     { name: 'Home', href: '#', icon: Home },
@@ -26,25 +20,17 @@ const Navbar = () => {
   return (
     <>
       {/* Main Navbar */}
-      <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800 transition-colors duration-300 light-theme:bg-white/80 light-theme:border-gray-200">
+      <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <a href="#" className="text-2xl font-bold hero-text-gradient">LEXISHIFT</a>
             
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-full hover:bg-gray-800 transition-colors light-theme:hover:bg-gray-200"
-              >
-                {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-              </button>
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="p-2 rounded-lg hover:bg-gray-800 transition-colors light-theme:hover:bg-gray-200 group"
-              >
-                <Menu className="w-6 h-6 group-hover:rotate-180 transition-transform duration-300" />
-              </button>
-            </div>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-lg hover:bg-gray-800 transition-colors group"
+            >
+              <Menu className="w-6 h-6 text-white group-hover:rotate-180 transition-transform duration-300" />
+            </button>
           </div>
         </div>
       </nav>
@@ -70,16 +56,16 @@ const Navbar = () => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-            className="fixed right-0 top-0 h-full w-80 bg-gray-900 shadow-2xl z-50 light-theme:bg-white"
+            className="fixed right-0 top-0 h-full w-80 bg-gray-900 shadow-2xl z-50"
           >
             <div className="p-6">
               <div className="flex justify-between items-center mb-8">
                 <h2 className="text-xl font-bold hero-text-gradient">Navigation</h2>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-2 rounded-full hover:bg-gray-800 transition-colors light-theme:hover:bg-gray-100"
+                  className="p-2 rounded-full hover:bg-gray-800 transition-colors"
                 >
-                  <X className="w-6 h-6" />
+                  <X className="w-6 h-6 text-white" />
                 </button>
               </div>
               
@@ -90,7 +76,7 @@ const Navbar = () => {
                     <motion.a
                       key={link.name}
                       href={link.href}
-                      className="flex items-center space-x-4 p-3 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800 transition-all duration-200 group light-theme:text-gray-600 light-theme:hover:text-black light-theme:hover:bg-gray-100"
+                      className="flex items-center space-x-4 p-3 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800 transition-all duration-200 group"
                       onClick={() => setIsOpen(false)}
                       whileHover={{ x: 4 }}
                       transition={{ type: "spring", stiffness: 300 }}
@@ -103,18 +89,18 @@ const Navbar = () => {
               </div>
 
               <div className="absolute bottom-8 left-6 right-6">
-                <div className="border-t border-gray-800 pt-6 light-theme:border-gray-200">
+                <div className="border-t border-gray-800 pt-6">
                   <div className="flex justify-center space-x-6">
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors light-theme:hover:text-black">
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
                       <Twitter className="w-6 h-6" />
                     </a>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors light-theme:hover:text-black">
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
                       <Github className="w-6 h-6" />
                     </a>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors light-theme:hover:text-black">
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
                       <Linkedin className="w-6 h-6" />
                     </a>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors light-theme:hover:text-black">
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
                       <Mail className="w-6 h-6" />
                     </a>
                   </div>
