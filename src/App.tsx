@@ -1,0 +1,410 @@
+import React, { useRef, useState } from 'react';
+import { motion, AnimatePresence, useTransform, useScroll } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { Brain, Users, FileText, GraduationCap, Github, Twitter, Linkedin, Mail, ChevronDown, BookOpen, Sparkles, MessageSquareMore, Menu, X, Sun, Moon, Home, Compass, Book, MessageCircle, Info } from 'lucide-react';
+
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isDark, setIsDark] = useState(true);
+
+  const toggleTheme = () => {
+    setIsDark(!isDark);
+    document.documentElement.classList.toggle('light-theme');
+  };
+
+  const navLinks = [
+    { name: 'Home', href: '#', icon: Home },
+    { name: 'Find Specialists', href: '#', icon: Compass },
+    { name: 'Community', href: '#', icon: Users },
+    { name: 'Text Converter', href: '#', icon: FileText },
+    { name: 'Learning Resources', href: '#', icon: Book },
+    { name: 'Digital Library', href: '#', icon: BookOpen },
+    { name: 'AI Chat Support', href: '#', icon: MessageCircle },
+    { name: 'About Us', href: '#about', icon: Info },
+  ];
+
+  return (
+    <>
+      {/* Main Navbar */}
+      <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800 transition-colors duration-300 light-theme:bg-white/80 light-theme:border-gray-200">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <a href="#" className="text-2xl font-bold hero-text-gradient">LEXISHIFT</a>
+            
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-full hover:bg-gray-800 transition-colors light-theme:hover:bg-gray-200"
+              >
+                {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-2 rounded-lg hover:bg-gray-800 transition-colors light-theme:hover:bg-gray-200 group"
+              >
+                <Menu className="w-6 h-6 group-hover:rotate-180 transition-transform duration-300" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Overlay */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsOpen(false)}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Side Navigation */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: "spring", bounce: 0, duration: 0.4 }}
+            className="fixed right-0 top-0 h-full w-80 bg-gray-900 shadow-2xl z-50 light-theme:bg-white"
+          >
+            <div className="p-6">
+              <div className="flex justify-between items-center mb-8">
+                <h2 className="text-xl font-bold hero-text-gradient">Navigation</h2>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-2 rounded-full hover:bg-gray-800 transition-colors light-theme:hover:bg-gray-100"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+              
+              <div className="space-y-2">
+                {navLinks.map((link) => {
+                  const Icon = link.icon;
+                  return (
+                    <motion.a
+                      key={link.name}
+                      href={link.href}
+                      className="flex items-center space-x-4 p-3 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800 transition-all duration-200 group light-theme:text-gray-600 light-theme:hover:text-black light-theme:hover:bg-gray-100"
+                      onClick={() => setIsOpen(false)}
+                      whileHover={{ x: 4 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <Icon className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
+                      <span>{link.name}</span>
+                    </motion.a>
+                  );
+                })}
+              </div>
+
+              <div className="absolute bottom-8 left-6 right-6">
+                <div className="border-t border-gray-800 pt-6 light-theme:border-gray-200">
+                  <div className="flex justify-center space-x-6">
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors light-theme:hover:text-black">
+                      <Twitter className="w-6 h-6" />
+                    </a>
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors light-theme:hover:text-black">
+                      <Github className="w-6 h-6" />
+                    </a>
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors light-theme:hover:text-black">
+                      <Linkedin className="w-6 h-6" />
+                    </a>
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors light-theme:hover:text-black">
+                      <Mail className="w-6 h-6" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
+const FeatureCard = ({ icon: Icon, title, description, buttonText }: {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  buttonText: string;
+}) => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+      whileHover={{ scale: 1.05 }}
+      className="feature-card p-8 md:p-10 flex flex-col items-center text-center text-white cursor-pointer"
+    >
+      <Icon className="w-16 h-16 mb-6 text-white" strokeWidth={1} />
+      <h3 className="text-2xl font-bold mb-4">{title}</h3>
+      <p className="text-gray-300 mb-8 text-lg leading-relaxed">{description}</p>
+      <button className="bg-white text-black px-8 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors">
+        {buttonText}
+      </button>
+    </motion.div>
+  );
+};
+
+const FloatingSparkle = ({ delay = 0 }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0 }}
+    animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
+    transition={{ duration: 2, repeat: Infinity, delay }}
+    className="absolute"
+  >
+    <Sparkles className="text-white opacity-50" size={16} />
+  </motion.div>
+);
+
+function App() {
+  const featuresRef = useRef<HTMLDivElement>(null);
+  const aboutRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll();
+  
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+
+  const scrollToFeatures = () => {
+    featuresRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const [heroRef, heroInView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <div className="min-h-screen bg-black text-white transition-colors duration-300 light-theme:bg-white light-theme:text-black">
+      <Navbar />
+      
+      {/* Hero Section */}
+      <motion.div
+        ref={heroRef}
+        initial={{ opacity: 0 }}
+        animate={heroInView ? { opacity: 1 } : { opacity: 0 }}
+        className="gradient-bg min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-4 pt-16"
+      >
+        <motion.div style={{ y, opacity }} className="absolute inset-0 grid grid-cols-4 gap-4 p-4">
+          {Array.from({ length: 16 }).map((_, i) => (
+            <FloatingSparkle key={i} delay={i * 0.2} />
+          ))}
+        </motion.div>
+
+        <div className="container mx-auto text-center max-w-5xl relative z-10">
+          <motion.div
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="mb-8"
+          >
+            <div className="relative inline-block">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full blur-xl opacity-30"
+              />
+              <h1 className="text-6xl md:text-8xl font-bold hero-text-gradient tracking-tight relative z-10">
+                LEXISHIFT
+              </h1>
+            </div>
+          </motion.div>
+          <motion.p
+            initial={{ y: 50, opacity: 0 }}
+            animate={heroInView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
+            transition={{ delay: 0.4, duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+            className="text-xl md:text-3xl mb-12 max-w-3xl mx-auto text-gray-300 leading-relaxed"
+          >
+            Empowering dyslexic individuals with innovative tools and support for a brighter future
+          </motion.p>
+          <motion.div
+            initial={{ y: 50, opacity: 0 }}
+            animate={heroInView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
+            transition={{ delay: 0.6, duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+          >
+            <button 
+              onClick={scrollToFeatures}
+              className="bg-white text-black px-12 py-4 rounded-full text-xl font-semibold hover:bg-gray-100 transition-all hover:scale-105 active:scale-95"
+            >
+              Get Started
+            </button>
+          </motion.div>
+        </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 1 }}
+          className="absolute bottom-10 scroll-indicator cursor-pointer"
+          onClick={scrollToFeatures}
+        >
+          <ChevronDown className="w-10 h-10 text-white opacity-50" />
+        </motion.div>
+      </motion.div>
+
+      {/* Features Section */}
+      <div ref={featuresRef} className="py-24 md:py-32 px-4 bg-black light-theme:bg-white">
+        <div className="container mx-auto max-w-7xl">
+          <h2 className="text-4xl md:text-6xl font-bold text-center mb-20 hero-text-gradient">Our Features</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <FeatureCard
+              icon={Brain}
+              title="Consult a Doctor"
+              description="Connect with specialized healthcare professionals for personalized guidance and support."
+              buttonText="Find Specialists"
+            />
+            <FeatureCard
+              icon={Users}
+              title="Community Support"
+              description="Join our vibrant community of individuals sharing experiences and support."
+              buttonText="Join Community"
+            />
+            <FeatureCard
+              icon={FileText}
+              title="Dyslexia-Friendly Converter"
+              description="Transform any text into an easy-to-read format optimized for dyslexic readers."
+              buttonText="Try Converter"
+            />
+            <FeatureCard
+              icon={GraduationCap}
+              title="Learning Platform"
+              description="Access specialized educational resources tailored to your learning style."
+              buttonText="Start Learning"
+            />
+            <FeatureCard
+              icon={BookOpen}
+              title="Digital Library"
+              description="Access our extensive collection of dyslexia-friendly books and reading materials."
+              buttonText="Browse Library"
+            />
+            <FeatureCard
+              icon={MessageSquareMore}
+              title="AI Chat Support"
+              description="Get instant help and guidance from our AI-powered chatbot, available 24/7 to assist with any questions."
+              buttonText="Start Chat"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* About Us Section */}
+      <div id="about" ref={aboutRef} className="py-24 md:py-32 px-4 bg-gradient-to-b from-black to-gray-900 light-theme:from-white light-theme:to-gray-100">
+        <div className="container mx-auto max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 hero-text-gradient">About Us</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              LEXISHIFT was founded with a vision to revolutionize how dyslexic individuals interact with text and learning materials. 
+              Our team of dedicated professionals combines expertise in education, technology, and cognitive science to create innovative solutions 
+              that make reading and learning more accessible and enjoyable.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="feature-card p-8"
+            >
+              <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
+              <p className="text-gray-300">To empower individuals with dyslexia by providing innovative tools and support systems that enhance their learning experience.</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="feature-card p-8"
+            >
+              <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
+              <p className="text-gray-300">To create a world where dyslexia is not a barrier to learning and where every individual has equal access to education.</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              viewport={{ once: true }}
+              className="feature-card p-8"
+            >
+              <h3 className="text-2xl font-bold mb-4">Our Values</h3>
+              <p className="text-gray-300">Innovation, inclusivity, and empowerment guide everything we do as we strive to make a positive impact.</p>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-black border-t border-gray-800 py-16 px-4 light-theme:bg-white light-theme:border-gray-200">
+        <div className="container mx-auto max-w-7xl">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
+            <div>
+              <h3 className="text-2xl font-bold mb-6 hero-text-gradient">LEXISHIFT</h3>
+              <p className="text-gray-400 text-lg">Empowering dyslexic individuals worldwide</p>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
+              <ul className="space-y-4">
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-lg">Find Specialists</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-lg">Community</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-lg">Text Converter</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-lg">Learning Resources</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-lg">Digital Library</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-lg">AI Chat Support</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-lg">About Us</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-6">Contact</h4>
+              <ul className="space-y-4">
+                <li className="text-gray-400 text-lg">Email: contact@lexishift.com</li>
+                <li className="text-gray-400 text-lg">Phone: +1 (555) 123-4567</li>
+                <li className="text-gray-400 text-lg">Address: 123 Innovation St, Tech City</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-6">Follow Us</h4>
+              <div className="flex space-x-6">
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <Twitter className="w-8 h-8" strokeWidth={1.5} />
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <Linkedin className="w-8 h-8" strokeWidth={1.5} />
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <Github className="w-8 h-8" strokeWidth={1.5} />
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <Mail className="w-8 h-8" strokeWidth={1.5} />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 mt-16 pt-8 text-center text-gray-400">
+            <p className="text-lg">&copy; {new Date().getFullYear()} LEXISHIFT. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+export default App;
