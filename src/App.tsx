@@ -179,11 +179,13 @@ const FeatureCard = ({
   title,
   description,
   buttonText,
+  link,
 }: {
   icon: React.ElementType
   title: string
   description: string
   buttonText: string
+  link: string
   index: number
 }) => {
   const ref = useRef(null)
@@ -199,20 +201,23 @@ const FeatureCard = ({
     <motion.div
       ref={ref}
       style={{ y, opacity }}
-      className="feature-card p-8 md:p-10 flex flex-col items-center text-center text-white cursor-pointer light-theme:text-black"
+      className="feature-card p-8 md:p-10 flex flex-col items-center text-center text-white cursor-pointer"
     >
       <motion.div whileHover={{ rotate: 360, scale: 1.2 }} transition={{ duration: 0.8 }}>
-        <Icon className="w-16 h-16 mb-6 text-white light-theme:text-black" strokeWidth={1} />
+        <Icon className="w-16 h-16 mb-6 text-white" strokeWidth={1} />
       </motion.div>
       <h3 className="text-2xl font-bold mb-4">{title}</h3>
-      <p className="text-gray-300 mb-8 text-lg leading-relaxed light-theme:text-gray-700">{description}</p>
-      <motion.button
-        className="bg-white text-black px-8 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors light-theme:bg-black light-theme:text-white light-theme:hover:bg-gray-800"
+      <p className="text-gray-300 mb-8 text-lg leading-relaxed">{description}</p>
+      <motion.a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-white text-black px-8 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
         {buttonText}
-      </motion.button>
+      </motion.a>
     </motion.div>
   )
 }
@@ -383,47 +388,52 @@ function App() {
             Our Features
           </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {[
-              {
-                icon: Brain,
-                title: "Consult a Doctor",
-                description: "Connect with specialized healthcare professionals for personalized guidance and support.",
-                buttonText: "Find Specialists",
-              },
-              {
-                icon: Users,
-                title: "Community Support",
-                description: "Join our vibrant community of individuals sharing experiences and support.",
-                buttonText: "Join Community",
-              },
-              {
-                icon: FileText,
-                title: "Dyslexia-Friendly Converter",
-                description: "Transform any text into an easy-to-read format optimized for dyslexic readers.",
-                buttonText: "Try Converter",
-              },
-              {
-                icon: GraduationCap,
-                title: "Learning Platform",
-                description: "Access specialized educational resources tailored to your learning style.",
-                buttonText: "Start Learning",
-              },
-              {
-                icon: BookOpen,
-                title: "Digital Library",
-                description: "Access our extensive collection of dyslexia-friendly books and reading materials.",
-                buttonText: "Browse Library",
-              },
-              {
-                icon: MessageSquareMore,
-                title: "AI Chat Support",
-                description:
-                  "Get instant help and guidance from our AI-powered chatbot, available 24/7 to assist with any questions.",
-                buttonText: "Start Chat",
-              },
-            ].map((feature, index) => (
-              <FeatureCard key={index} {...feature} index={index} />
-            ))}
+          {[
+  {
+    icon: Brain,
+    title: "Consult a Doctor",
+    description: "Connect with specialized healthcare professionals for personalized guidance and support.",
+    buttonText: "Find Specialists",
+    link: "https://youtu.be/BWczaSneA0Q?si=DqFWlPZUlFRAew-q"
+  },
+  {
+    icon: Users,
+    title: "Community Support",
+    description: "Join our vibrant community of individuals sharing experiences and support.",
+    buttonText: "Join Community",
+    link: "https://youtu.be/Ecs-foVS74Q?si=DGrgMIkOlSy36ZHp"
+  },
+  {
+    icon: FileText,
+    title: "Dyslexia-Friendly Converter",
+    description: "Transform any text into an easy-to-read format optimized for dyslexic readers.",
+    buttonText: "Try Converter",
+    link: "https://youtu.be/XCIYHCXQoxQ?si=bybA15V6Y0kj66na"
+  },
+  {
+    icon: GraduationCap,
+    title: "Learning Platform",
+    description: "Access specialized educational resources tailored to your learning style.",
+    buttonText: "Start Learning",
+    link: "https://youtu.be/umsrQSA2iOM?si=StdtB3TnTM045l1L"
+  },
+  {
+    icon: BookOpen,
+    title: "Digital Library",
+    description: "Access our extensive collection of dyslexia-friendly books and reading materials.",
+    buttonText: "Browse Library",
+    link: "https://youtu.be/Gz38Yj09k3A?si=qNpt02tTDPcdtABG"
+  },
+  {
+    icon: MessageSquareMore,
+    title: "AI Chat Support",
+    description: "Get instant help and guidance from our AI-powered chatbot, available 24/7 to assist with any questions.",
+    buttonText: "Start Chat",
+    link: "https://youtu.be/kPa7bsKwL-c?si=HgyC2YfcohA4RpEE"
+  }
+].map((feature, index) => (
+  <FeatureCard key={index} {...feature} index={index} />
+))}
           </div>
         </div>
       </motion.div>
@@ -554,10 +564,10 @@ function App() {
             <div>
               <h4 className="text-lg font-semibold mb-6">Contact</h4>
               <ul className="space-y-4">
-                <li className="text-gray-400 text-lg light-theme:text-gray-600">Email: contact@lexishift.com</li>
-                <li className="text-gray-400 text-lg light-theme:text-gray-600">Phone: +1 (555) 123-4567</li>
+                <li className="text-gray-400 text-lg light-theme:text-gray-600">Email: tb123983@gmail.com</li>
+                <li className="text-gray-400 text-lg light-theme:text-gray-600">Phone: +91 7407902174</li>
                 <li className="text-gray-400 text-lg light-theme:text-gray-600">
-                  Address: 123 Innovation St, Tech City
+                  Address: Barasat
                 </li>
               </ul>
             </div>
@@ -565,7 +575,7 @@ function App() {
               <h4 className="text-lg font-semibold mb-6">Follow Us</h4>
               <div className="flex space-x-6">
                 <motion.a
-                  href="#"
+                  href="https://x.com/sahnik_biswas?t=sp2WgWJVyv6iQL5hzG6hJQ&s=09"
                   className="text-gray-400 hover:text-white transition-colors light-theme:hover:text-black"
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
@@ -573,7 +583,7 @@ function App() {
                   <Twitter className="w-8 h-8" strokeWidth={1.5} />
                 </motion.a>
                 <motion.a
-                  href="#"
+                  href="https://www.linkedin.com/in/sahnik-biswas-8514012a7"
                   className="text-gray-400 hover:text-white transition-colors light-theme:hover:text-black"
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
@@ -581,7 +591,7 @@ function App() {
                   <Linkedin className="w-8 h-8" strokeWidth={1.5} />
                 </motion.a>
                 <motion.a
-                  href="#"
+                  href="https://github.com/Sahnik0"
                   className="text-gray-400 hover:text-white transition-colors light-theme:hover:text-black"
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
@@ -589,7 +599,7 @@ function App() {
                   <Github className="w-8 h-8" strokeWidth={1.5} />
                 </motion.a>
                 <motion.a
-                  href="#"
+                  href="tb123983@gmail.com"
                   className="text-gray-400 hover:text-white transition-colors light-theme:hover:text-black"
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
