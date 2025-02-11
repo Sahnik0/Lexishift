@@ -560,12 +560,20 @@ function App() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: index * 0.2 }}
           viewport={{ once: true }}
-          className={`feature-card p-8 ${theme === "light" ? "border-2 border-black rounded-lg" : ""}`}
+          className={`p-8 rounded-xl backdrop-blur-sm shadow-lg transition-all duration-300 ${
+            theme === "dark"
+              ? "bg-white/10 hover:bg-white/20 border border-white/10"
+              : "bg-black/10 hover:bg-black/15 border border-gray-200"
+          }`}
         >
-          <h3 className={`text-2xl font-bold mb-4 ${theme === "light" ? "text-stroke-light" : ""}`}>
+          <h3 className={`text-2xl font-bold mb-4 ${
+            theme === "light" ? "text-stroke-light" : ""
+          }`}>
             {item.title}
           </h3>
-          <p className={`${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}>
+          <p className={`${
+            theme === "dark" ? "text-gray-300" : "text-gray-700"
+          } leading-relaxed`}>
             {item.description}
           </p>
         </motion.div>
