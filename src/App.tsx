@@ -223,15 +223,35 @@ const FeatureCard = ({
     <motion.div
       ref={ref}
       style={{ y, opacity }}
-      className={`feature-card p-8 md:p-10 flex flex-col items-center text-center ${
-        theme === "dark" ? "text-white" : "text-black"
-      } ${theme === "light" ? "border-2 border-black rounded-lg" : ""} cursor-pointer`}
+      className={`feature-card p-8 md:p-10 flex flex-col items-center text-center rounded-xl backdrop-blur-sm shadow-lg ${
+        theme === "dark"
+          ? "bg-white/10 hover:bg-white/20 border border-white/10"
+          : "bg-black/10 hover:bg-black/15 border border-gray-200"
+      } transition-all duration-300 cursor-pointer`}
     >
-      <motion.div whileHover={{ rotate: 360, scale: 1.2 }} transition={{ duration: 0.8 }}>
-        <Icon className={`w-16 h-16 mb-6 ${theme === "dark" ? "text-white" : "text-black"}`} strokeWidth={1} />
+      <motion.div 
+        whileHover={{ rotate: 360, scale: 1.2 }} 
+        transition={{ duration: 0.8 }}
+      >
+        <Icon 
+          className={`w-16 h-16 mb-6 ${
+            theme === "dark" ? "text-white" : "text-black"
+          }`} 
+          strokeWidth={1} 
+        />
       </motion.div>
-      <h3 className={`text-2xl font-bold mb-4 ${theme === "light" ? "text-stroke-light" : ""}`}>{title}</h3>
-      <p className={`${theme === "dark" ? "text-gray-300" : "text-gray-700"} mb-8 text-lg leading-relaxed`}>
+      <h3 
+        className={`text-2xl font-bold mb-4 ${
+          theme === "light" ? "text-stroke-light" : ""
+        }`}
+      >
+        {title}
+      </h3>
+      <p 
+        className={`${
+          theme === "dark" ? "text-gray-300" : "text-gray-700"
+        } mb-8 text-lg leading-relaxed`}
+      >
         {description}
       </p>
       <motion.a
@@ -239,7 +259,9 @@ const FeatureCard = ({
         target="_blank"
         rel="noopener noreferrer"
         className={`${
-          theme === "dark" ? "bg-white text-black hover:bg-gray-200" : "bg-black text-white hover:bg-gray-800"
+          theme === "dark"
+            ? "bg-white text-black hover:bg-gray-200"
+            : "bg-black text-white hover:bg-gray-800"
         } px-8 py-3 rounded-full text-lg font-semibold transition-colors`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
