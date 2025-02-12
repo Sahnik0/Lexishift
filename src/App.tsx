@@ -725,8 +725,25 @@ function App() {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-16 pt-8 text-center text-gray-400 light-theme:border-gray-200 light-theme:text-gray-600">
-            <p className="text-lg">&copy; {new Date().getFullYear()} LEXISHIFT. All rights reserved.</p>
-          </div>
+  <p className="text-lg mb-2">&copy; {new Date().getFullYear()} LEXISHIFT. All rights reserved.</p>
+  <p className="text-lg">
+    Powered by{" "}
+    <a 
+      href="#" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className={`
+        font-semibold 
+        hero-text-gradient 
+        hover:opacity-80 
+        transition-opacity 
+        ${theme === "light" ? "text-stroke-light" : ""}
+      `}
+    >
+      TherapyU
+    </a>
+  </p>
+</div>
         </div>
       </footer>
     </div>
