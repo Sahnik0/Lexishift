@@ -1,5 +1,6 @@
 "use client"
 import './styles.css';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import type React from "react"
 import { useRef, useState, useEffect } from "react"
 import { motion, AnimatePresence, useTransform, useScroll, useMotionValue, useSpring, useInView } from "framer-motion"
@@ -373,7 +374,7 @@ function App() {
   ref={heroRef}
   initial={{ opacity: 0 }}
   animate={isHeroInView ? { opacity: 1 } : { opacity: 0 }}
-  className={`${theme === "dark" ? "gradient-bg" : "bg-white"} min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-4 pt-16`}
+  className={`${theme === "dark" ? "gradient-bg" : "bg-white"} min-h-screen flex items-center relative overflow-hidden px-4 pt-16`}
 >
   <motion.div style={{ y, opacity }} className="absolute inset-0 grid grid-cols-4 gap-4 p-4">
     {Array.from({ length: 16 }).map((_, i) => (
@@ -381,56 +382,83 @@ function App() {
     ))}
   </motion.div>
 
-  <div className="container mx-auto text-center max-w-5xl relative z-10">
-    <motion.div
-      initial={{ scale: 0.8 }}
-      animate={{ scale: 1 }}
-      transition={{ duration: 1, ease: "easeOut" }}
-      className="mb-8"
-    >
-      <div className="relative inline-block">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-          className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full blur-xl opacity-30"
-        />
-<h1 className={`text-6xl md:text-8xl font-bold hero-text-gradient tracking-tight relative z-10 ${
-  theme === "light" ? "text-stroke-heavy" : ""
-}`}>
-  LEXISHIFT
-</h1>
-      </div>
-    </motion.div>
-    <motion.p
-      initial={{ y: 50, opacity: 0 }}
-      animate={isHeroInView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
-      transition={{ delay: 0.4, duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-      className={`text-xl md:text-3xl mb-12 max-w-3xl mx-auto ${theme === "dark" ? "text-gray-300" : "text-gray-700"} leading-relaxed`}
-    >
-      Empowering dyslexic individuals with innovative tools and support for a brighter future
-    </motion.p>
-    <motion.div
-      initial={{ y: 50, opacity: 0 }}
-      animate={isHeroInView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
-      transition={{ delay: 0.6, duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-    >
-      <motion.button
-        onClick={scrollToFeatures}
-        className={`${
-          theme === "dark" ? "bg-white text-black hover:bg-gray-200" : "bg-black text-white hover:bg-gray-800"
-        } px-12 py-4 rounded-full text-xl font-semibold transition-all hover:scale-105 active:scale-95`}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+  <div className="container mx-auto relative z-10">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      {/* Left Side - Text Content */}
+      <motion.div
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        className="text-left space-y-8"
       >
-        Get Started
-      </motion.button>
-    </motion.div>
+        <div className="relative inline-block">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+            className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full blur-xl opacity-30"
+          />
+          <h1 className={`text-7xl xl:text-8xl font-bold hero-text-gradient tracking-tight relative z-10 ${
+            theme === "light" ? "text-stroke-heavy" : ""
+          }`}>
+            LEXISHIFT
+          </h1>
+        </div>
+        
+        <motion.p
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+          className={`text-xl xl:text-2xl ${theme === "dark" ? "text-gray-300" : "text-gray-700"} leading-relaxed max-w-xl`}
+        >
+          Empowering dyslexic individuals with innovative tools and support for a brighter future
+        </motion.p>
+        
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.8 }}
+        >
+          <motion.button
+            onClick={scrollToFeatures}
+            className={`${
+              theme === "dark" ? "bg-white text-black hover:bg-gray-200" : "bg-black text-white hover:bg-gray-800"
+            } px-12 py-4 rounded-full text-xl font-semibold transition-all hover:scale-105 active:scale-95 shadow-lg`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Get Started
+          </motion.button>
+        </motion.div>
+      </motion.div>
+
+      {/* Right Side - Lottie Animation */}
+      <motion.div
+        initial={{ x: 100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ delay: 0.4, duration: 1 }}
+        className="flex justify-center items-center"
+      >
+        <motion.div
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
+          className="w-[500px] h-[500px]" // Increased size
+        >
+          <DotLottieReact
+            src="https://lottie.host/05c826c4-9798-4c3c-9246-8e4ad3701edc/u28uCnJp6f.lottie"
+            loop
+            autoplay
+          />
+        </motion.div>
+      </motion.div>
+    </div>
   </div>
+
   <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ delay: 1.2, duration: 1 }}
-    className="absolute bottom-10 scroll-indicator cursor-pointer"
+    className="absolute bottom-10 left-1/2 transform -translate-x-1/2 scroll-indicator cursor-pointer"
     onClick={scrollToFeatures}
   >
     <motion.div
@@ -441,7 +469,6 @@ function App() {
     </motion.div>
   </motion.div>
 </motion.div>
-
       {/* Features Section */}
       <motion.div
         ref={featuresRef}
