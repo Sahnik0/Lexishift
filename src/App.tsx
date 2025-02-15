@@ -438,18 +438,21 @@ function App() {
         transition={{ delay: 0.4, duration: 1 }}
         className="flex justify-center items-center"
       >
-        <motion.div
-          initial={{ scale: 0.8 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.8, duration: 0.5 }}
-          className="w-[500px] h-[500px]" // Increased size
-        >
-          <DotLottieReact
-            src="https://lottie.host/05c826c4-9798-4c3c-9246-8e4ad3701edc/u28uCnJp6f.lottie"
-            loop
-            autoplay
-          />
-        </motion.div>
+<motion.div
+  initial={{ scale: 0.8 }}
+  animate={{ scale: 1 }}
+  transition={{ delay: 0.8, duration: 0.5 }}
+  className="relative w-[500px] h-[500px]"
+>
+  <div className="absolute inset-0 w-full h-full blur-3xl bg-gradient-to-r from-purple-500/30 to-blue-500/30 rounded-full" />
+  
+  <DotLottieReact
+    src="https://lottie.host/05c826c4-9798-4c3c-9246-8e4ad3701edc/u28uCnJp6f.lottie"
+    loop
+    autoplay
+    className="relative z-10 w-full h-full"
+  />
+</motion.div>
       </motion.div>
     </div>
   </div>
