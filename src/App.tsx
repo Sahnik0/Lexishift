@@ -497,7 +497,7 @@ function App() {
                 title: "Consult a Doctor",
                 description: "Connect with specialized healthcare professionals for personalized guidance and support.",
                 buttonText: "Find Specialists",
-                link: "https://youtu.be/BWczaSneA0Q?si=DqFWlPZUlFRAew-q",
+                link: "https://lexicare.vercel.app/",
               },
               {
                 icon: Users,
