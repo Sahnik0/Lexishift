@@ -511,7 +511,7 @@ function App() {
                 title: "Dyslexia-Friendly Converter",
                 description: "Transform any text into an easy-to-read format optimized for dyslexic readers.",
                 buttonText: "Try Converter",
-                link: "https://youtu.be/XCIYHCXQoxQ?si=bybA15V6Y0kj66na",
+                link: "https://lexishift.onrender.com/",
               },
               {
                 icon: GraduationCap,
