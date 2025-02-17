@@ -525,7 +525,7 @@ function App() {
                 title: "Digital Library",
                 description: "Access our extensive collection of dyslexia-friendly books and reading materials.",
                 buttonText: "Browse Library",
-                link: "https://youtu.be/Gz38Yj09k3A?si=qNpt02tTDPcdtABG",
+                link: "https://lexishift.onrender.com/learn_more",
               },
               {
                 icon: MessageSquareMore,
