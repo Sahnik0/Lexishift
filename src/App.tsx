@@ -504,7 +504,7 @@ function App() {
                 title: "Community Support",
                 description: "Join our vibrant community of individuals sharing experiences and support.",
                 buttonText: "Join Community",
-                link: "https://youtu.be/Ecs-foVS74Q?si=DGrgMIkOlSy36ZHp",
+                link: "https://linktr.ee/LexiShift",
               },
               {
                 icon: FileText,
