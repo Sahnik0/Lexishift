@@ -518,7 +518,7 @@ function App() {
                 title: "Learning Platform",
                 description: "Access specialized educational resources tailored to your learning style.",
                 buttonText: "Start Learning",
-                link: "https://youtu.be/umsrQSA2iOM?si=StdtB3TnTM045l1L",
+                link: "https://lexilearn-neon.vercel.app/",
               },
               {
                 icon: BookOpen,
@@ -533,7 +533,7 @@ function App() {
                 description:
                   "Get instant help and guidance from our AI-powered chatbot, available 24/7 to assist with any questions.",
                 buttonText: "Start Chat",
-                link: "https://youtu.be/kPa7bsKwL-c?si=HgyC2YfcohA4RpEE",
+                link: "#",
               },
             ].map((feature, index) => (
               <FeatureCard key={index} {...feature} index={index} theme={theme} />
