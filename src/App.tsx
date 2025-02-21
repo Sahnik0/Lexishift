@@ -533,7 +533,7 @@ function App() {
                 description:
                   "Get instant help and guidance from our AI-powered chatbot, available 24/7 to assist with any questions.",
                 buttonText: "Start Chat",
-                link: "#",
+                link: "https://dyslu-chatbot.onrender.com",
               },
             ].map((feature, index) => (
               <FeatureCard key={index} {...feature} index={index} theme={theme} />
