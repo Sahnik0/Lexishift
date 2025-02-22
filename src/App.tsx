@@ -504,7 +504,7 @@ function App() {
                 title: "Community Support",
                 description: "Join our vibrant community of individuals sharing experiences and support.",
                 buttonText: "Join Community",
-                link: "https://linktr.ee/LexiShift",
+                link: "https://lexilearn-neon.vercel.app/support",
               },
               {
                 icon: FileText,
@@ -731,7 +731,7 @@ function App() {
     <p className="text-lg mb-2">&copy; {new Date().getFullYear()} LEXISHIFT. All rights reserved.</p>
   </div>
     </div>
-    <div className="fixed bottom-4 right-4">
+{/*     <div className="fixed bottom-4 right-4">
       <p className="text-lg text-gray-400">
         Powered by{" "}
         <a 
@@ -749,7 +749,7 @@ function App() {
           TherapyU
         </a>
       </p>
-    </div>
+    </div> */}
   </footer>
 
     </div>
