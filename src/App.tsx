@@ -284,6 +284,95 @@ const FloatingSparkle = ({ delay = 0 }) => (
   </motion.div>
 )
 
+const SlidingStories = ({ theme }: { theme: string }) => {
+  const stories = [
+    {
+      title: "Albert Einstein",
+      description: "Despite struggling with dyslexia, Einstein revolutionized physics with his theory of relativity. His unique way of thinking, often attributed to his dyslexia, led to groundbreaking scientific discoveries.",
+    },
+    {
+      title: "Richard Branson",
+      description: "The founder of Virgin Group credits his dyslexia for his business success. His different perspective and problem-solving abilities helped him build a global business empire.",
+    },
+    {
+      title: "Steven Spielberg",
+      description: "Diagnosed with dyslexia at age 60, Spielberg's creative storytelling and visual thinking helped him become one of the most influential filmmakers in cinema history.",
+    },
+    {
+      title: "Tom Cruise",
+      description: "Diagnosed with dyslexia at age 7, Cruise overcame reading challenges to become one of Hollywood's most successful actors, proving that dyslexia doesn't limit potential.",
+    },
+    {
+      title: "Walt Disney",
+      description: "Despite his dyslexia, Disney built an entertainment empire and revolutionized animation, showing that creativity knows no bounds.",
+    },
+    {
+      title: "John Lennon",
+      description: "The legendary Beatles musician had dyslexia but turned his unique perspective into groundbreaking musical innovations and artistic expressions.",
+    }
+  ]
+
+  // Duplicate the stories array for seamless loop
+  const duplicatedStories = [...stories, ...stories]
+
+  return (
+    <div className="relative overflow-hidden py-10">
+      {/* Add gradient masks for smooth fade effect */}
+      <div className={`absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none
+        ${theme === "dark" 
+          ? "bg-gradient-to-r from-black to-transparent" 
+          : "bg-gradient-to-r from-white to-transparent"}`} 
+      />
+      <div className={`absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none
+        ${theme === "dark" 
+          ? "bg-gradient-to-l from-black to-transparent" 
+          : "bg-gradient-to-l from-white to-transparent"}`} 
+      />
+
+      <motion.div
+        animate={{
+          x: [0, -50 * stories.length],
+        }}
+        transition={{
+          x: {
+            repeat: Infinity,
+            repeatType: "loop",
+            duration: 30,
+            ease: "linear",
+          },
+        }}
+        className="flex gap-8"
+      >
+        {duplicatedStories.map((story, index) => (
+          <motion.div
+            key={index}
+            className={`flex-shrink-0 w-[400px] p-8 rounded-xl backdrop-blur-sm shadow-lg 
+              ${theme === "dark"
+                ? "bg-white/10 border border-white/10"
+                : "bg-black/10 border border-gray-200"
+              } transition-all duration-300`}
+            whileHover={{ 
+              scale: 1.05,
+              backgroundColor: theme === "dark" ? "rgba(255, 255, 255, 0.15)" : "rgba(0, 0, 0, 0.15)",
+              transition: { duration: 0.2 }
+            }}
+          >
+            <motion.h3 
+              className={`text-2xl font-bold mb-4 ${theme === "light" ? "text-stroke-light" : ""}`}
+              whileHover={{ scale: 1.02 }}
+            >
+              {story.title}
+            </motion.h3>
+            <p className={`${theme === "dark" ? "text-gray-300" : "text-gray-700"} leading-relaxed`}>
+              {story.description}
+            </p>
+          </motion.div>
+        ))}
+      </motion.div>
+    </div>
+  )
+}
+
 function App() {
   const featuresRef = useRef<HTMLDivElement>(null)
   const aboutRef = useRef<HTMLDivElement>(null)
@@ -533,7 +622,7 @@ function App() {
                 description:
                   "Get instant help and guidance from our AI-powered chatbot, available 24/7 to assist with any questions.",
                 buttonText: "Start Chat",
-                link: "https://dyslu-chatbot.onrender.com",
+                link: "https://dyslu-bot.vercel.app/",
               },
             ].map((feature, index) => (
               <FeatureCard key={index} {...feature} index={index} theme={theme} />
@@ -542,7 +631,7 @@ function App() {
         </div>
       </motion.div>
 
-{/* About Us Section */}
+{/* Success Stories Section */}
 <motion.div
   id="about"
   ref={aboutRef}
@@ -555,62 +644,18 @@ function App() {
     <motion.div className="text-center mb-16">
       <h2 className={`text-4xl md:text-6xl font-bold mb-8 hero-text-gradient ${
         theme === "light" ? "text-stroke-heavy" : ""
-      }`}>About Us</h2>
+      }`}>Success Stories</h2>
       <p className={`text-xl ${
         theme === "dark" ? "text-gray-300" : "text-gray-700"
       } max-w-3xl mx-auto leading-relaxed`}>
-        LEXISHIFT was founded with a vision to revolutionize how dyslexic individuals interact with text and
-        learning materials. Our team of dedicated professionals combines expertise in education, technology, and
-        cognitive science to create innovative solutions that make reading and learning more accessible and
-        enjoyable.
+        Discover inspiring stories of individuals who have overcome dyslexia and achieved remarkable success in their fields.
       </p>
     </motion.div>
 
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {[
-        {
-          title: "Our Mission",
-          description:
-            "To empower individuals with dyslexia by providing innovative tools and support systems that enhance their learning experience.",
-        },
-        {
-          title: "Our Vision",
-          description:
-            "To create a world where dyslexia is not a barrier to learning and where every individual has equal access to education.",
-        },
-        {
-          title: "Our Values",
-          description:
-            "Innovation, inclusivity, and empowerment guide everything we do as we strive to make a positive impact.",
-        },
-      ].map((item, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: index * 0.2 }}
-          viewport={{ once: true }}
-          className={`p-8 rounded-xl backdrop-blur-sm shadow-lg transition-all duration-300 ${
-            theme === "dark"
-              ? "bg-white/10 hover:bg-white/20 border border-white/10"
-              : "bg-black/10 hover:bg-black/15 border border-gray-200"
-          }`}
-        >
-          <h3 className={`text-2xl font-bold mb-4 ${
-            theme === "light" ? "text-stroke-light" : ""
-          }`}>
-            {item.title}
-          </h3>
-          <p className={`${
-            theme === "dark" ? "text-gray-300" : "text-gray-700"
-          } leading-relaxed`}>
-            {item.description}
-          </p>
-        </motion.div>
-      ))}
-    </div>
+    <SlidingStories theme={theme} />
   </div>
 </motion.div>
+
       {/* Footer */}
       <footer
         className={`${theme === "dark" ? "bg-black border-gray-800" : "bg-white border-gray-200"} border-t py-16 px-4`}
@@ -632,7 +677,7 @@ function App() {
               <ul className="space-y-4">
                 <li>
                   <a
-                    href="https://www.linkedin.com/in/sahnik-biswas-8514012a7"
+                    href="https://lexicare.vercel.app/"
                     className={`text-gray-400 hover:text-white transition-colors text-lg ${theme === "dark" ? "hover:text-white" : "hover:text-black"} light-theme:text-gray-600 light-theme:hover:text-black`}
                   >
                     Find Specialists
@@ -656,7 +701,7 @@ function App() {
                 </li>
                 <li>
                   <a
-                    href="https://www.linkedin.com/in/sahnik-biswas-8514012a7"
+                    href="https://lexilearn-neon.vercel.app/"
                     className={`text-gray-400 hover:text-white transition-colors text-lg ${theme === "dark" ? "hover:text-white" : "hover:text-black"} light-theme:text-gray-600 light-theme:hover:text-black`}
                   >
                     Learning Resources
@@ -684,7 +729,7 @@ function App() {
             <div>
               <h4 className="text-lg font-semibold mb-6">Contact</h4>
               <ul className="space-y-4">
-                <li className="text-gray-400 text-lg light-theme:text-gray-600">Email: tb123983@gmail.com</li>
+                <li className="text-gray-400 text-lg light-theme:text-gray-600">Email: forloopdeloop@gmail.com</li>
                 <li className="text-gray-400 text-lg light-theme:text-gray-600">Phone: +91 7407902174</li>
                 <li className="text-gray-400 text-lg light-theme:text-gray-600">Address: Barasat</li>
               </ul>
@@ -717,7 +762,7 @@ function App() {
                   <Github className="w-8 h-8" strokeWidth={1.5} />
                 </motion.a>
                 <motion.a
-                  href="tb123983@gmail.com"
+                  href="forloopdeloop@gmail.com"
                   className="text-gray-400 hover:text-white transition-colors light-theme:hover:text-black"
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
@@ -731,7 +776,7 @@ function App() {
     <p className="text-lg mb-2">&copy; {new Date().getFullYear()} LEXISHIFT. All rights reserved.</p>
   </div>
     </div>
-{/*     <div className="fixed bottom-4 right-4">
+    <div className="fixed bottom-4 right-4">
       <p className="text-lg text-gray-400">
         Powered by{" "}
         <a 
@@ -749,7 +794,7 @@ function App() {
           TherapyU
         </a>
       </p>
-    </div> */}
+    </div>
   </footer>
 
     </div>
