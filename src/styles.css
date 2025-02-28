@@ -1,10 +1,161 @@
-/* src/styles.css */
-.text-stroke-light {
-    -webkit-text-stroke: 1px black;
-    text-stroke: 1px black;
+@import url("https://fonts.cdnfonts.com/css/opendyslexic");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: "OpenDyslexic", system-ui, sans-serif;
   }
-  
-  .text-stroke-heavy {
-    -webkit-text-stroke: 2px black;
-    text-stroke: 2px black;
+
+  html.light-theme {
+    & .gradient-bg {
+      background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+    }
+
+    & .gradient-bg::before {
+      background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+    }
+
+    & .feature-card {
+      background-color: rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    & .feature-card:hover {
+      background-color: rgba(0, 0, 0, 0.06);
+      border-color: rgba(0, 0, 0, 0.2);
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.1);
+    }
+
+    & .hero-text-gradient {
+      background: linear-gradient(to right, #000 20%, #666 40%, #000 60%, #666 80%);
+      background-size: 200% auto;
+      color: #000;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  position: relative;
+}
+
+.gradient-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+}
+
+.feature-card {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+}
+
+.feature-card:hover {
+  transform: scale(1.02);
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.1);
+}
+
+.hero-text-gradient {
+  background: linear-gradient(to right, #fff 20%, #999 40%, #fff 60%, #999 80%);
+  background-size: 200% auto;
+  color: #000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 8s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.scroll-indicator {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Timeline styles */
+.feature-timeline-content {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.feature-timeline-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Testimonial styles */
+.testimonial-card {
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Accessibility improvements */
+.dyslexia-friendly-text {
+  line-height: 1.8;
+  letter-spacing: 0.05em;
+  word-spacing: 0.1em;
+}
+
+/* Enhanced focus styles for better accessibility */
+:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.6);
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
