@@ -481,21 +481,21 @@ const TestimonialsSection = ({ theme }: { theme: string }) => {
       role: "Theoretical Physicist",
       quote:
         "Despite struggling with dyslexia, LEXISHIFT's tools helped me organize my thoughts in ways traditional methods couldn't. The specialized features truly understand how dyslexic minds work.",
-      image: "/placeholder.svg?height=200&width=200",
+      image: "\Albert.jpg?height=200&width=200",
     },
     {
       name: "Richard Branson",
       role: "Entrepreneur, Virgin Group",
       quote:
         "As someone with dyslexia, finding LEXISHIFT was a game-changer. Their community support and specialized tools have helped me communicate my ideas more effectively than ever before.",
-      image: "/placeholder.svg?height=200&width=200",
+      image: "\Richard.jpeg?height=200&width=200",
     },
     {
       name: "Steven Spielberg",
       role: "Film Director",
       quote:
         "LEXISHIFT understands that dyslexia isn't a limitation but a different way of thinking. Their text converter transformed how I approach scripts and storytelling.",
-      image: "/placeholder.svg?height=200&width=200",
+      image: "\Steven.jpeg?height=200&width=200",
     },
     {
       name: "Tom Cruise",
